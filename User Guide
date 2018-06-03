@@ -5,11 +5,12 @@ Implemention:
 1) I have used Cucumber-JVM framwork along with JUnit and maven to develop the test framework.
 2) While searching the product, it will ignore all the advertisemnts and click first listed product.
 3) In Cucumber Feature, tags(@positiveLogin, @negativeLogin, @Logout etc.) have been used to segregate the type of tests.
-4) In Cucumber Feature, the test data are parameterized using all the below listed data driven testing techniques.
+4) For Scenario @Logout, @ReverifyCart and AddToCart only default login Id and Password (Correct one) and Chrome browser will be used.
+5)For @positiveLogin and @negativeLogin, Implemtation is done for Chrome, IE and Firefox Browsers, however only firefox older veriod ( Before 47.0.1) will support this framework. 
+6) In Cucumber Feature, the test data are parameterized using all the below listed data driven testing techniques.
 	a) Parameterizing without Example Keyword
 	b) Parameterizing with Example Keyword
 	c) Data Table
-5) Implemtation is done for Chrome, IE and Firefox Browsers, however only firefox older veriod ( Before 47.0.1) will support this framework. 
 7) Execution report will be generated in all three formats - HTML, JSON and XML using cucumber reporting plugins.
 
 Prerequisites:
