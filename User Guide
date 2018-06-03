@@ -21,15 +21,13 @@ Prerequisites:
 
 Execution:
 
-1) The deliverable for the assignment is a single executable Jar file "AvivaSearch_V1.2.jar".
+1) The deliverable for the assignment is a single executable Jar file "Visa_Amazon_TestV1.0".
 2) Please use the below command to execute in command line from the jar file directory.
 
-Positive and Negative Cases Both:
-		java -jar AvivaSearch_V1.2.jar
-Positive Cases Alone:
-		java -jar -Dcucumber.options="--tags @positive" AvivaSearch_V1.2.jar	
-Negative Cases Alone:
-		java -jar -Dcucumber.options="--tags @negative" AvivaSearch_V1.2.jar
+To Execute All Scenarios:
+		java -jar Visa_Amazon_TestV1.0
+Specific Scenario/Scenarios:
+		java -jar -Dcucumber.options="--tags @<ScenarioName1>,@<ScenarioName2>..<etc.> " Visa_Amazon_TestV1.0
 		
 Reporting:
 
