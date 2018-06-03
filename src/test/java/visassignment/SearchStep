@@ -1,0 +1,269 @@
+package test.java.visaAssignment;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import cucumber.api.DataTable;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class SearchStep {
+
+	public WebDriver driver;
+	public List<WebElement> list;
+
+	@Given("^opens Amazon Home Page \"([^\"]*)\" in \"([^\"]*)\"$")
+	public void Amazon_url_in_browser(String url, String browser) {
+		try {
+			driver = LaunchAmazon.getDriver(browser, url);
+			
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+
+	
+	@When("^Sign In and Account List Link is Clicked$")
+	public void sign_In_And_Account_List_is_clicked() {
+		try {
+			LaunchAmazon.clickSignInAccountListLink(driver);
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	
+	@When("^Login_Id is Entered$")
+	public void login_Id_is_entered(DataTable data) throws Throwable {
+		try {
+			List<List<String>> text = data.raw();
+			LaunchAmazon.enterLoginId(text.get(0).get(0), driver);
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	@When("^Continue Button is CLicked$")
+	public void contd_Button_is_clicked() {
+		try {
+			LaunchAmazon.clickContdButton(driver);
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	@When("^Password is Entered$")
+	public void password_is_entered(DataTable data) throws Throwable {
+		try {
+			List<List<String>> text = data.raw();
+			LaunchAmazon.enterPassword(text.get(0).get(0), driver);
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	
+	@When("^Sign In Button is CLicked$")
+	public void sign_In_Button_is_clicked() {
+		try {
+			LaunchAmazon.clickSignInButton(driver);
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+
+	@Then("^verify the Login Success message \"([^\"]*)\"$")
+	public void greeting_User_Message_displayed(String greetingMessage) {
+		
+
+		try {
+			WebElement obj = LaunchAmazon.getGreetingMessage(driver);
+			System.out.println("Greeting Message is:\n ===========> Actual:" + obj.getText() + "  Expected:" + greetingMessage);
+			Assert.assertEquals(obj.getText().toString(),greetingMessage.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			driver.quit();
+		}
+		
+	}
+
+	@Then("^verify the Login Failure message \"([^\"]*)\"$")
+	public void login_Failure_Message(String greetingMessage) {
+		
+
+		try {
+			WebElement obj = LaunchAmazon.getLoginErrorMessage(driver);
+			System.out.println("Failure Message is:\n ===========> Actual:" + obj.getText() + "  Expected:" + greetingMessage);
+			Assert.assertEquals(obj.getText().toString(),greetingMessage.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			driver.quit();
+		}
+		
+	}
+	
+	@Given("^Product name \"([^\"]*)\" is Provided$")
+	public void search_Product(String productName) {
+		try {
+			LaunchAmazon.searchProduct(productName,driver);
+			
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	@When("^Search Button is Clicked$")
+	public void search_Button_is_clicked() {
+		try {
+			LaunchAmazon.clickSearchButton(driver);
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+	
+	
+	@When("^Select \"([^\"]*)\" Product in the search result$")
+	public void select_First_Product() {
+		try {
+			LaunchAmazon.clickFirstListedProduct(driver);
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+	
+	
+	@Then("^verify Product_Name and Price$")
+	public void product_Name_And_Price(DataTable data) {
+		
+
+		try {
+			List<List<String>> text = data.raw();
+			WebElement pName = LaunchAmazon.getProductName(driver);
+			WebElement pPrice = LaunchAmazon.getProductPrice(driver);
+			
+			System.out.println("Product Name is:\n ===========> Actual:" + pName.getText() + "  Expected:" + text.get(0).get(0));
+			Assert.assertEquals(pName.getText().toString(),text.get(0).get(0).toString());
+			
+			System.out.println("Product Price is:\n ===========> Actual:" + pPrice.getText() + "  Expected:" + text.get(0).get(1));
+			Assert.assertEquals(pPrice.getText().toString(),text.get(0).get(1).toString());
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			driver.quit();
+		}
+		
+	}
+	
+	@Then("^Verify Product Name and Price in Cart$")
+	public void product_Name_And_Price_In_Cart(DataTable data) {
+		
+
+		try {
+			
+			
+			List<List<String>> text = data.raw();
+			WebElement pNameInCart = LaunchAmazon.getProductNameInCart(driver);
+			WebElement pPriceInCart = LaunchAmazon.getProductPriceInCart(driver);
+			
+			System.out.println("Product Name in Cart is:\n ===========> Actual:" + pNameInCart.getText() + "  Expected:" + text.get(0).get(0));
+			Assert.assertEquals(pNameInCart.getText().toString(),text.get(0).get(0).toString());
+			
+			System.out.println("Product Price in Cart is:\n ===========> Actual:" + pPriceInCart.getText() + "  Expected:" + text.get(0).get(1));
+			Assert.assertEquals(pPriceInCart.getText().toString(),text.get(0).get(1).toString());
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			driver.quit();
+		}
+		
+	}
+	
+	@Then("^Successful Add to Cart \"([^\"]*)\"$")
+	public void add_To_Cart_Button_is_clicked(String addToCartMessage) {
+		
+		try {
+			LaunchAmazon.clickAddToCart(driver);
+			
+			WebElement cartAddMessage = LaunchAmazon.getCartAddMessage(driver);
+			System.out.println("Message After product is Added to cart is:\n ===========> Actual:" + cartAddMessage.getText() + "  Expected:" + addToCartMessage);
+			Assert.assertEquals(cartAddMessage.getText().toString(),addToCartMessage);
+			
+			//Click on Cart Button
+			
+			LaunchAmazon.clickCartButton(driver);
+			
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+	
+	@Given("^Already Logged In as \"([^\"]*)\"$")
+	public void already_Logged_In(String greetingMessage) {
+		try {
+			try {
+				WebElement obj = LaunchAmazon.getGreetingMessage(driver);
+				System.out.println("Greeting Message is:\n ===========> Actual:" + obj.getText() + "  Expected:" + greetingMessage);
+				Assert.assertEquals(obj.getText().toString(),greetingMessage.toString());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				driver.quit();
+			}
+			
+		} catch (Exception e) {
+			driver.quit();
+		}
+	}
+	
+	
+	@When("^Sign Out Button Is clicked$")
+	public void Logout() {
+		try {
+			LaunchAmazon.logout(driver);
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+	
+	
+	@Then("^Logout Successfully$")
+	public void logout_Success() {
+		
+		try {
+			
+			WebElement logoutLabel = LaunchAmazon.getLogoutMessage(driver);
+			System.out.println(" After Logout Label should be:\n ===========> Actual:" + logoutLabel.getText() + "  Expected: Sign in" );
+			Assert.assertEquals(logoutLabel.getText().toString(),"Sign in");
+			
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+	
+	
+	@When("^Go to cart after Re-Login$")
+	public void goToCart() {
+		try {
+			LaunchAmazon.clickCartIcon(driver);
+		} catch (Exception e) {
+			driver.quit();
+			
+		}
+	}
+}
