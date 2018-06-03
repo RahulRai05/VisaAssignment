@@ -266,4 +266,28 @@ public class SearchStep {
 			
 		}
 	}
+	
+	
+@Before("@AddToCart, @Logout, @ReverifyCart")
+public void default_login() {
+	try {
+		driver = LaunchAmazon.getDriver("CH", "www.amazon.com");
+		LaunchAmazon.clickSignInAccountListLink(driver);
+		LaunchAmazon.enterLoginId("rahulrai0501@gmail.com", driver);
+		LaunchAmazon.clickContdButton(driver);
+		LaunchAmazon.enterPassword("123456", driver);
+		LaunchAmazon.clickSignInButton(driver);
+	} catch (Exception e) {
+		
+		e.printStackTrace();
+		driver.quit();
+	}
+	
+}
+@After
+public void endScenario() {
+	driver.quit();
+	}
+}
+
 }
