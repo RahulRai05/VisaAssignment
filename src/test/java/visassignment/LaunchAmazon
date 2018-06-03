@@ -251,7 +251,7 @@ public class LaunchAmazon {
 
 	public static void display_the_reports(){
 		try{
-		File htmlFile = new File(LaunchAmazon.currentDir + "/Report/HTML/index.html");
+		File htmlFile = new File(LaunchAmazon.currentDir + "/AmazonTestReport/HTML/index.html");
 		Desktop.getDesktop().browse(htmlFile.toURI());
 		}
 		catch(Exception e){
