@@ -1,0 +1,262 @@
+package test.java.visaAssignment;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class LaunchAmazon {
+
+	public static String currentDir;
+
+	public static WebDriver getDriver(String browserType, String url) throws Exception {
+		WebDriver driver = null;
+		currentDir = System.getProperty("user.dir");
+		File file = null;
+		switch (browserType) {
+		case "CH":
+			file = copyDrivers("chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+			ChromeOptions chromeOptions = new ChromeOptions();
+			chromeOptions.addArguments("--start-maximized");
+			driver = new ChromeDriver(chromeOptions);
+			driver.get(url);
+			break;
+		case "IE":
+			DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+			capabilities.setCapability("InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION", true);
+			capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+			capabilities.setCapability("ignoreZoomSetting", true);
+			capabilities.setCapability("ignoreProtectedModeSettings", true);
+			capabilities.setCapability("initialBrowserUrl", url);
+			file = copyDrivers("IEDriverServer.exe");
+			System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+			driver = new InternetExplorerDriver(capabilities);
+			driver.manage().window().maximize();
+			break;
+		case "FF":
+			driver = new FirefoxDriver();
+			driver.get(url);
+			break;
+		default:
+			file = copyDrivers("chromedriver.exe");
+			System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+			driver = new ChromeDriver();
+			driver.get(url);
+			break;
+		}
+		return driver;
+
+	}
+
+	public static WebElement enterLoginId(String data, WebDriver driver) {
+
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='ap_email']")));
+
+		WebElement idField = driver.findElement(By.xpath(".//*[@id='ap_email']"));
+		idField.sendKeys(data);
+		idField.sendKeys(Keys.ESCAPE);
+		return idField;
+	}
+	
+	public static WebElement enterPassword(String data, WebDriver driver) {
+
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ap_password")));
+
+		WebElement pswdField = driver.findElement(By.id("ap_password"));
+		pswdField.sendKeys(data);
+		pswdField.sendKeys(Keys.ESCAPE);
+		return pswdField;
+
+	}
+	
+	
+
+	public static WebElement clickSignInAccountListLink(WebDriver driver) {
+		WebElement signInLinkAccountListLink = driver.findElement(By.id("nav-link-accountList"));
+		signInLinkAccountListLink.click();
+		return signInLinkAccountListLink;
+
+	}
+	
+	public static WebElement clickContdButton(WebDriver driver) {
+		WebElement contdButton = driver.findElement(By.id("continue"));
+		contdButton.click();
+		return contdButton;
+
+	}
+	
+
+	public static WebElement clickSignInButton(WebDriver driver) {
+		WebElement signInButton = driver.findElement(By.id("signInSubmit"));
+		signInButton.click();
+		return signInButton;
+
+	}
+	
+	
+	
+	public static WebElement getGreetingMessage(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='nav-link-accountList']/span[1]")));
+		return driver.findElement(By.xpath(".//*[@id='nav-link-accountList']/span[1]"));
+
+	}
+	
+	public static WebElement getLoginErrorMessage(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='auth-error-message-box']/div/div/ul/li/span")));
+		return driver.findElement(By.xpath(".//*[@id='auth-error-message-box']/div/div/ul/li/span"));
+
+	}
+	
+	public static WebElement searchProduct(String data, WebDriver driver) {
+
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='twotabsearchtextbox']")));
+
+		WebElement searchField = driver.findElement(By.xpath(".//*[@id='twotabsearchtextbox']"));
+		searchField.sendKeys(data);
+		searchField.sendKeys(Keys.ESCAPE);
+		return searchField;
+	}
+	
+	
+	public static WebElement clickSearchButton(WebDriver driver) {
+		WebElement searchButton = driver.findElement(By.xpath(".//*[@id='nav-search']/form/div[2]/div/input"));
+		searchButton.click();
+		return searchButton;
+
+	}
+	
+	public static WebElement getProductName(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("productTitle")));
+		return driver.findElement(By.id("productTitle"));
+
+	}
+	
+	
+	public static WebElement getProductPrice(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("priceblock_ourprice")));
+		return driver.findElement(By.id("priceblock_ourprice"));
+
+	}
+	
+	public static WebElement getProductNameInCart(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='activeCartViewForm']/div[2]/div/div[4]/div/div[1]/div/div/div[2]/ul/li[1]/span/a/span")));
+		return driver.findElement(By.xpath(".//*[@id='activeCartViewForm']/div[2]/div/div[4]/div/div[1]/div/div/div[2]/ul/li[1]/span/a/span"));
+
+	}
+	
+	
+	public static WebElement getProductPriceInCart(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='activeCartViewForm']/div[2]/div/div[4]/div/div[2]/p/span")));
+		return driver.findElement(By.xpath(".//*[@id='activeCartViewForm']/div[2]/div/div[4]/div/div[2]/p/span"));
+
+	}
+	
+	public static WebElement clickAddToCart(WebDriver driver) {
+		WebElement addToCart = driver.findElement(By.id("add-to-cart-button"));
+		addToCart.click();
+		return addToCart;
+
+	}
+	
+	//It will Select First Listed product ignoring Adds
+	
+	public static WebElement clickFirstListedProduct(WebDriver driver) {
+		WebElement firstListedProduct = driver.findElement(By.id(".//*[@id='result_0']/div/div/div/div[2]/div[1]/div[1]/a/h2"));
+		firstListedProduct.click();
+		return firstListedProduct;
+
+	}
+	
+	
+	
+	public static WebElement getCartAddMessage(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='huc-v2-order-row-confirm-text']/h1")));
+		return driver.findElement(By.xpath(".//*[@id='huc-v2-order-row-confirm-text']/h1"));
+
+	}
+	
+	public static WebElement clickCartButton(WebDriver driver) {
+		WebElement cartButton = driver.findElement(By.id("hlb-view-cart-announce"));
+		cartButton.click();
+		return cartButton;
+
+	}
+	
+	public static WebElement logout(WebDriver driver) {
+		Actions action=new Actions(driver);
+		WebElement userAccount = driver.findElement(By.xpath(".//*[@id='nav-link-accountList']/span[2]"));
+		action.moveToElement(userAccount).perform();
+		WebElement signOut = driver.findElement(By.xpath(".//*[@id='nav-item-signout-sa']/span"));
+		action.moveToElement(signOut).click().perform();
+		return signOut;
+
+	}
+	
+	
+	public static WebElement getLogoutMessage(WebDriver driver){
+		WebDriverWait wait = new WebDriverWait(driver, 10000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//*[@id='authportal-main-section']/div[2]/div/div[1]/form/div/div/div/h1")));
+		return driver.findElement(By.xpath(".//*[@id='authportal-main-section']/div[2]/div/div[1]/form/div/div/div/h1"));
+
+	}
+	
+	
+	public static WebElement clickCartIcon(WebDriver driver) {
+		WebElement cartIcon = driver.findElement(By.xpath(".//*[@id='nav-cart']/span[2]"));
+		cartIcon.click();
+		return cartIcon;
+
+	}
+	
+	
+	public static File copyDrivers(String resourceName) throws Exception {
+		URL resource = LaunchAmazon.class.getResource("AmazonTest/drivers/" + resourceName);
+		File f = new File("Drivers");
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+		File driverFile = new File(currentDir + "/Drivers/" + resourceName);
+		if (!driverFile.exists()) {
+			FileUtils.copyURLToFile(resource, driverFile);
+		}
+
+		return driverFile;
+
+	}
+
+	public static void display_the_reports(){
+		try{
+		File htmlFile = new File(LaunchAmazon.currentDir + "/Report/HTML/index.html");
+		Desktop.getDesktop().browse(htmlFile.toURI());
+		}
+		catch(Exception e){
+			System.out.println("Error in opening the  report file. "+e.getLocalizedMessage());
+		}
+	}
+
+}
