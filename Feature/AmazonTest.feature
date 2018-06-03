@@ -14,8 +14,8 @@ Scenario Outline:Open Amazon Home Page and Sign In by Providing Correct User ID 
 Examples:
 	| url 					  | browser |
 	| https://www.amazon.com/ | CH      |
-#	| https://www.amazon.com/ | IE      |
-#	| https://www.amazon.com/ | FF      |
+	| https://www.amazon.com/ | IE      |
+	| https://www.amazon.com/ | FF      |
 
 @negativeLogin
 Scenario Outline:Open Amazon Home Page and Sign In by Providing Incorrect User ID
@@ -27,9 +27,9 @@ Scenario Outline:Open Amazon Home Page and Sign In by Providing Incorrect User I
 	Then verify the Login Failure message "We cannot find an account with that email address"
 Examples:
 	| url 					  | browser |
-#	| https://www.amazon.com/ | CH      | 
-#	| https://www.amazon.com/ | IE      | 
-#	| https://www.amazon.com/ | FF      | 
+	| https://www.amazon.com/ | CH      | 
+	| https://www.amazon.com/ | IE      | 
+	| https://www.amazon.com/ | FF      | 
 
 
 @negativeLogin
@@ -45,9 +45,9 @@ Scenario Outline:Open Amazon Home Page and Sign In by Providing correct User ID 
 	Then verify the Login Failure message "Your password is incorrect"
 Examples:
 	| url 					  | browser |
-#	| https://www.amazon.com/ | CH      | 
-#	| https://www.amazon.com/ | IE      | 
-#	| https://www.amazon.com/ | FF      | 
+	| https://www.amazon.com/ | CH      | 
+	| https://www.amazon.com/ | IE      | 
+	| https://www.amazon.com/ | FF      | 
 
 
 @AddToCart
