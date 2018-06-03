@@ -1,0 +1,21 @@
+package test.java.visaAssignment;
+
+import org.junit.AfterClass;
+import org.junit.runner.RunWith;
+
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(features = "Feature", glue = "classpath:test.java.visaAssignment", dryRun = false, monochrome = true,
+format={"pretty","html:AmazonTestReport/HTML","json:AmazonTestReport/JSON/JsonReport.json","junit:AmazonTestReport/XML/XMLReport.xml"})
+
+
+
+public class AmazonTestRunner {
+	@AfterClass
+	public static void reports(){
+		LaunchAmazon.display_the_reports();
+
+	}
+}
