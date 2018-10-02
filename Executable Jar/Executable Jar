@@ -1,0 +1,7 @@
+1) The deliverable for the assignment is a single executable Jar file "Visa_Amazon_TestV1.0".
+2) Please use the below command to execute in command line from the jar file directory.
+
+To Execute All Scenarios:
+		java -jar Visa_Amazon_TestV1.0
+Specific Scenario/Scenarios:
+		java -jar -Dcucumber.options="--tags @<ScenarioName1>,@<ScenarioName2>..<etc.> " Visa_Amazon_TestV1.0	

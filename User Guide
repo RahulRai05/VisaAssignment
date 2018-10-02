@@ -1,0 +1,38 @@
+Visa Assignment - Amazon Test
+
+Implemention:
+
+1) I have used Cucumber-JVM framwork along with JUnit and maven to develop the test framework.
+2) While searching the product, it will ignore all the advertisemnts and click first listed product.
+3) In Cucumber Feature, tags(@positiveLogin, @negativeLogin, @Logout etc.) have been used to segregate the type of tests.
+4) For Scenario @Logout, @ReverifyCart and AddToCart only default login Id and Password (Correct one) and Chrome browser will be used.
+5)For @positiveLogin and @negativeLogin, Implemtation is done for Chrome, IE and Firefox Browsers, however only firefox older veriod ( Before 47.0.1) will support this framework. 
+6) In Cucumber Feature, the test data are parameterized using all the below listed data driven testing techniques.
+	a) Parameterizing without Example Keyword
+	b) Parameterizing with Example Keyword
+	c) Data Table
+7) Execution report will be generated in all three formats - HTML, JSON and XML using cucumber reporting plugins.
+
+Prerequisites:
+
+1) Java should be installed and JAVA_HOME should be configured.
+2) Chrome and IE browser are required.
+3) The directory form where the jar will be executed should allow to create new directory, as the driver servers will be extracted to a new direcotry "Drivers" and used during the execution. 
+
+Execution:
+
+1) The deliverable for the assignment is a single executable Jar file "Visa_Amazon_TestV1.0".
+2) Please use the below command to execute in command line from the jar file directory.
+
+To Execute All Scenarios:
+		java -jar Visa_Amazon_TestV1.0
+Specific Scenario/Scenarios:
+		java -jar -Dcucumber.options="--tags @<ScenarioName1>,@<ScenarioName2>..<etc.> " Visa_Amazon_TestV1.0
+		
+Reporting:
+
+1) HTML, JSON and XML reports will be generated under the respective sub directory in the "AmazonTestReport" directory.
+2) Once the execution is completed, HTML report will open by default to for user to verify the test status.(Refresh if the ActiveX content is blocked in IE).
+
+
+Note :  As after giving password, it is asking for captha I could not generate end to end execution report.I am attching captcha screen shot with name as "AzazonCaptcha".
